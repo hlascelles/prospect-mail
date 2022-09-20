@@ -2,6 +2,7 @@ const { app, BrowserWindow, shell, ipcMain, Menu, MenuItem } = require('electron
 const settings = require('electron-settings')
 const CssInjector = require('../js/css-injector')
 const path = require('path')
+const contextMenu = require('electron-context-menu')
 
 let outlookUrl
 let deeplinkUrls
@@ -12,7 +13,21 @@ let $this
 //Setted by cmdLine to initial minimization
 const initialMinimization = {
     domReady: false
-} 
+}
+
+//right click options
+contextMenu({
+    copyLink: true,
+    showLookUpSelection:true,
+    showSearchWithGoogle:true,
+    showCopyImage:true,
+    showCopyImageAddress:true,
+    showSaveImage:true,
+    showSaveLinkAs:true,
+    showInspectElement:true,
+    showLearnSpelling:true,
+    spellcheck:true
+});
 
 class MailWindowController {
     constructor() {
@@ -120,7 +135,7 @@ class MailWindowController {
             console.log('initialMinimization.domReady', initialMinimization.domReady)
             if (!initialMinimization.domReady) {
                 this.win.show()
-            }             
+            }
         })
 
         // prevent the app quit, hide the window instead.
